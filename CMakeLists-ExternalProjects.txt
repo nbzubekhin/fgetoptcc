@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 2.8)
+project(Demo)
+
+include(ExternalProject)
+
+ExternalProject_Add(
+    GoogleTest
+    #URL http://googletest.googlecode.com/files/gtest-1.6.0.zip
+    #URL ftp://localhost/gtest-1.6.0.zip
+    URL ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/gtest-1.6.0.zip
+    INSTALL_COMMAND ""
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON
+    UPDATE_COMMAND ""
+    PATCH_COMMAND ""
+    SOURCE_DIR "${CMAKE_BINARY_DIR}/gtest"
+    #CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${GLOBAL_OUTPUT_PATH}/gtest
+
+    TEST_COMMAND ""
+)

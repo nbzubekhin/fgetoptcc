@@ -19,6 +19,8 @@ OBJECTS3	= examples/use_fgetopt_alias_cpp.o
 PRG2		= use_fgetopt_alias_cpp
 OBJECTS4	= examples/use_fgetopt_c.o
 PRG3		= use_fgetopt_c
+OBJECTS5	= examples/use_fgetopt_alias_c.o
+PRG4		= use_fgetopt_alias_c
 
 INCLIB      = -lfgetopt
 INCLUDES    = -I/usr/include/ -I./src/
@@ -26,7 +28,7 @@ LIBDIR      = -L./src/
 
 RM		    = rm -f
 
-all: $(LIB1) $(PRG1) $(PRG2) $(PRG3)
+all: $(LIB1) $(PRG1) $(PRG2) $(PRG3) $(PRG4)
 
 $(LIB1): $(OBJECTS1)
 	$(AR) $(ARFLAGS) src/lib$(LIB1) $(OBJECTS1)
@@ -40,6 +42,9 @@ $(PRG2): $(OBJECTS3)
 $(PRG3): $(OBJECTS4)
 	$(CXX) $(OBJECTS4) $(LIBDIR) $(INCLIB) -o examples/$@
 
+$(PRG4): $(OBJECTS5)
+	$(CXX) $(OBJECTS5) $(LIBDIR) $(INCLIB) -o examples/$@
+
 %.o: %.c
 	$(CC) $(CCFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -50,6 +55,8 @@ src/fgetopt.o: src/fgetopt.c
 examples/use_fgetopt_cpp.o: examples/use_fgetopt_cpp.cc
 examples/use_fgetopt_alias_cpp.o: examples/use_fgetopt_alias_cpp.cc
 examples/use_fgetopt_c.o: examples/use_fgetopt_c.c
+examples/use_fgetopt_alias_c.o: examples/use_fgetopt_alias_c.c
 
 clean:
-	$(RM) *~ *.err src/*.o src/lib$(LIB1) examples/*.o examples/$(PRG1) examples/$(PRG2)
+	$(RM) *~ *.err src/*.o src/lib$(LIB1) examples/*.o \
+    examples/$(PRG1) examples/$(PRG2) examples/$(PRG3) examples/$(PRG4)

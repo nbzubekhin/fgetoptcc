@@ -1,14 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fgetopt.h>
+#include "fgetopt.h"
 
 void help();
 
 int main(int argc,char **argv) {
+    opts_alias_t options[] = {
+        {"-h", "--help"},
+        {"-v", "--verbose"},
+        {"-d", "--device-name"},
+        {"-p", "--port"}
+    };
+
+    size_t num_opts = sizeof(options)/sizeof(opts_alias_t);
+
     OutParam_t          *param;
-    //VarParam_t          vparam;
     char                *device_name = (char *)"Not set name";
     int                 verb = -1, port = -1;
+
+    (void)set_alias_for_options_line(argc, argv, options, num_opts);
 
     /** Parse arguments */
     for ( ; ; ) {
@@ -39,10 +49,10 @@ int main(int argc,char **argv) {
 }
 
 void help() {
-    printf("Program recv_msod\n");
-    printf("Usage: recv_msod [OPTIONS]\n");
-    printf("   -h     help menu (this screen)\n");
-    printf("   -v     verbose mode on\n");
-    printf("   -d     device name for Pulsar (default name '/dev/pulsar')\n");
-    printf("   -p     set port (default value 2021)\n");
+    printf("Program use_fgetopt_alias_c\n");
+    printf("Usage: use_fgetopt_alias_c [OPTIONS]\n");
+    printf("   -h or --help         help menu (this screen)\n");
+    printf("   -v or --verbose      verbose mode on\n");
+    printf("   -d or --device-name  device name for Pulsar (default name '/dev/pulsar')\n");
+    printf("   -p or --port         set port (default value 2021)\n");
 }
