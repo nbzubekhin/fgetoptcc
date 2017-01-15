@@ -46,6 +46,45 @@ TEST(ARGV, DefaultConstructor) {
         EXPECT_FALSE(true);
 }
 
+TEST(ARGV, AssignmentOperator) {
+
+    int count;
+    ARGV oargv1(argc_some_text, argv_some_text);
+    ARGV oargv;
+
+    oargv = oargv1;
+
+    for (count = 0; count < argc_some_text; count++)
+        if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
+            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+            std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
+            break;
+        }
+
+    // If not out of the loop permaturely,
+    // the test passed
+    EXPECT_EQ(count, argc_some_text);
+
+}
+
+TEST(ARGV, CopyConstructor) {
+
+    int count;
+    ARGV oargv1(argc_some_text, argv_some_text);
+    ARGV oargv(oargv1);
+
+    for (count = 0; count < argc_some_text; count++)
+        if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
+            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+            std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
+            break;
+        }
+
+    // If not out of the loop permaturely,
+    // the test passed
+    EXPECT_EQ(count, argc_some_text);
+}
+
 TEST(ARGV, testARGVPositive) {
 
     int count;

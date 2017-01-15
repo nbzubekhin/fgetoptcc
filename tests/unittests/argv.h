@@ -39,6 +39,31 @@ class ARGV {
     size_t  m_str_len;
     char *m_ptr_str;
 
+    void free_argv() {
+        for (this->m_count = 0; this->m_count < this->m_argc; this->m_count++)
+            delete[] this->m_argv[this->m_count];
+        delete[] this->m_argv;
+    }
+
+    void copy_members(const ARGV &obj) {
+        if (obj.m_argc == 0) {
+            this->m_argc = obj.m_argc;
+            this->m_count = obj.m_count;
+            this->m_str_len = obj.m_str_len;
+            this->m_ptr_str = obj.m_ptr_str;
+            this->m_argv = NULL;
+        } else {
+            this->m_argc = obj.m_argc;
+            this->m_argv = new char *[this->m_argc];
+            for (this->m_count = 0; this->m_count < this->m_argc; this->m_count++) {
+                this->m_str_len = strlen(obj.m_argv[this->m_count]) + 1;
+                this->m_ptr_str = new char[this->m_str_len];
+                strncpy(this->m_ptr_str, obj.m_argv[this->m_count], this->m_str_len);
+                this->m_argv[this->m_count] = this->m_ptr_str;
+            }
+        }
+    }
+
   public:
     char **m_argv;
 
@@ -59,10 +84,21 @@ class ARGV {
         }
     }
 
+    ARGV(const ARGV &obj) {
+        this->copy_members(obj);
+    }
+
+    ARGV &operator=(const ARGV &obj) {
+        if (this != &obj) {
+            this->free_argv();
+            this->copy_members(obj);
+        }
+
+        return (*this);
+    }
+
     ~ARGV() {
-        for (m_count = 0; m_count < m_argc; m_count++)
-            delete[] m_argv[m_count];
-        delete[] m_argv;
+        this->free_argv();
     }
 };
 
