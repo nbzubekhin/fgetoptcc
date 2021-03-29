@@ -25,14 +25,15 @@
  */
 
 #include "../../src/fgetopt.h"
+
+#include "argv.h"
 #include "gtest/gtest.h"
 #include "test_kits.h"
-#include "argv.h"
 
 // We test ARGV class
 
 TEST(ARGV, DefaultConstructor) {
-    ARGV    oargv;
+    ARGV oargv;
 
     // <TechnicalDetails>
     //
@@ -41,44 +42,41 @@ TEST(ARGV, DefaultConstructor) {
     // </TechnicalDetails>
 
     if (oargv.m_argv == NULL)
-        EXPECT_TRUE(true);
+	EXPECT_TRUE(true);
     else
-        EXPECT_FALSE(true);
+	EXPECT_FALSE(true);
 }
 
 TEST(ARGV, AssignmentOperator) {
-
-    int count;
+    int	 count;
     ARGV oargv1(argc_some_text, argv_some_text);
     ARGV oargv;
 
     oargv = oargv1;
 
     for (count = 0; count < argc_some_text; count++)
-        if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
-            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
-            std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
-            break;
-        }
+	if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
+	    std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+	    std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
+	    break;
+	}
 
     // If not out of the loop permaturely,
     // the test passed
     EXPECT_EQ(count, argc_some_text);
-
 }
 
 TEST(ARGV, CopyConstructor) {
-
-    int count;
+    int	 count;
     ARGV oargv1(argc_some_text, argv_some_text);
     ARGV oargv(oargv1);
 
     for (count = 0; count < argc_some_text; count++)
-        if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
-            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
-            std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
-            break;
-        }
+	if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
+	    std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+	    std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
+	    break;
+	}
 
     // If not out of the loop permaturely,
     // the test passed
@@ -86,16 +84,15 @@ TEST(ARGV, CopyConstructor) {
 }
 
 TEST(ARGV, testARGVPositive) {
-
-    int count;
+    int	 count;
     ARGV oargv(argc_some_text, argv_some_text);
 
     for (count = 0; count < argc_some_text; count++)
-        if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
-            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
-            std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
-            break;
-        }
+	if (strcmp(oargv.m_argv[count], argv_some_text[count])) {
+	    std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+	    std::cout << "argv_some_text[" << count << "]: " << argv_some_text[count] << std::endl;
+	    break;
+	}
 
     // If not out of the loop permaturely,
     // the test passed
@@ -103,22 +100,21 @@ TEST(ARGV, testARGVPositive) {
 }
 
 TEST(ARGV, testARGVNegative) {
-
     // <TechnicalDetails>
     //
     // ...
     //
     // </TechnicalDetails>
 
-    int count;
+    int	 count;
     ARGV oargv(argc_some_text, argv_some_text);
 
     for (count = 0; count < argc_some_text; count++)
-        if (strcmp(oargv.m_argv[count], argv_some_text_c[count])) {
-            std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
-            std::cout << "argv_some_text_c[" << count << "]: " << argv_some_text_c[count] << std::endl;
-            break;
-        }
+	if (strcmp(oargv.m_argv[count], argv_some_text_c[count])) {
+	    std::cout << "oargv.m_argv[" << count << "]: " << oargv.m_argv[count] << std::endl;
+	    std::cout << "argv_some_text_c[" << count << "]: " << argv_some_text_c[count] << std::endl;
+	    break;
+	}
 
     // If out of the loop permaturely,
     // the test passed
@@ -155,7 +151,6 @@ TEST(GETOPT, CopyConstructor) {
 }
 
 TEST(GETOPT, ParsingHelp) {
-
     // <TechnicalDetails>
     //
     // ...
@@ -163,30 +158,29 @@ TEST(GETOPT, ParsingHelp) {
     // </TechnicalDetails>
 
     char *argv_0[] = {
-        "program-name"
-        "-a",
-        "-h",
-        "-m"
-    };
+	"program-name"
+	"-a",
+	"-h",
+	"-m"};
 
-    int                 argc_0 = sizeof(argv_0)/sizeof(char *);
+    int argc_0 = sizeof(argv_0) / sizeof(char *);
 
-    GETOPT              obj_getopt;
-    OutParam_t          *param;
+    GETOPT	obj_getopt;
+    OutParam_t *param;
 
     /** Parse arguments */
-    for ( ; ; ) {
-        param = obj_getopt.GetOpt(argc_0, argv_0, (char *)"-ha:m::");
+    for (;;) {
+	param = obj_getopt.GetOpt(argc_0, argv_0, (char *)"-ha:m::");
 
-        if (param->c == -1)
-            break;
+	if (param->c == -1)
+	    break;
 
-        switch (param->c) {
-        case 'h':
-            EXPECT_TRUE(true);
-            return;
-            break;
-        }
+	switch (param->c) {
+	    case 'h':
+		EXPECT_TRUE(true);
+		return;
+		break;
+	}
     }
 
     EXPECT_FALSE(true);
